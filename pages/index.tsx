@@ -4,16 +4,17 @@ import React, { useState } from "react";
 export default function Index() {
   const [number, setNumber] = useState(0);
   const [wordList, setWordList] = useState([]);
-  const [validNumber, setValidNumber] = useState(true); //number can't inlude 0 or 1
+  const [validNumber, setValidNumber] = useState(true); //numbers that include 0 or 1 are invalid
 
   const convertNumberToWordList = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const numberStringFormat = number.toString();
+    const inludesZeroOrOne = numberStringFormat.includes("0") || numberStringFormat.includes("1");
 
-    if (!numberStringFormat.includes("0") && !numberStringFormat.includes("1")) {
-      setValidNumber(true);
+    if (!inludesZeroOrOne) {
       const responseWordList = await axios.post("/api/converter", { number: numberStringFormat });
       setWordList(responseWordList.data.wordList);
+      setValidNumber(true);
     } else {
       setWordList([]);
       setValidNumber(false);
