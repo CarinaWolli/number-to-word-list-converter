@@ -31,6 +31,9 @@ export default function Index() {
         </div>
         <button type="submit">Convert</button>
       </form>
+      <div>
+        <p>All possible letter combinations: {wordList.join(", ")}</p>
+      </div>
     </div>
   );
 }
