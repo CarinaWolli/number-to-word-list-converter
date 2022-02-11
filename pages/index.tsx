@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useState } from "react";
 
 export default function Index() {
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(0);
   const [wordList, setWordList] = useState([]);
 
   const convertNumberToWordList = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const responseWordList = await axios.post("/api/converter", { number: number });
+    const numberStringFormat = number.toString();
+    const responseWordList = await axios.post("/api/converter", { number: numberStringFormat });
     setWordList(responseWordList.data.wordList);
   };
 
@@ -18,10 +19,10 @@ export default function Index() {
       <form className="mt-12 space-y-3" onSubmit={convertNumberToWordList}>
         <input
           id="number"
-          type="text"
-          value={number}
+          type="number"
+          value={number.toString()}
           placeholder="Number"
-          onChange={(e) => setNumber(e.target.value)}
+          onChange={(e) => setNumber(e.target.valueAsNumber)}
           autoComplete="number"
           required
           className="block px-3 py-2 placeholder-gray-500 border border-gray-300 rounded sm:text-sm"
