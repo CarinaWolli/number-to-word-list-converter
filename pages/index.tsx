@@ -4,12 +4,25 @@ import React, { useState } from "react";
 export default function Index() {
   const [number, setNumber] = useState(0);
   const [wordList, setWordList] = useState([]);
+  const [validNumber, setValidNumber] = useState(true); //number can't inlude 0 or 1
 
   const convertNumberToWordList = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const numberStringFormat = number.toString();
-    const responseWordList = await axios.post("/api/converter", { number: numberStringFormat });
-    setWordList(responseWordList.data.wordList);
+
+    if (!numberStringFormat.includes("0") && !numberStringFormat.includes("1")) {
+      setValidNumber(true);
+      const responseWordList = await axios.post("/api/converter", { number: numberStringFormat });
+      setWordList(responseWordList.data.wordList);
+    } else {
+      setWordList([]);
+      setValidNumber(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValidNumber(true);
+    setNumber(e.target.valueAsNumber);
   };
 
   return (
@@ -22,11 +35,14 @@ export default function Index() {
           type="number"
           value={number.toString()}
           placeholder="Number"
-          onChange={(e) => setNumber(e.target.valueAsNumber)}
+          onChange={handleChange}
           autoComplete="number"
           required
           className="block px-3 py-2 placeholder-gray-500 border border-gray-300 rounded sm:text-sm"
         />
+        {!validNumber && (
+          <div className="text-xs text-red-700">Invalid number (the digits 0 and 1 are not allowed)</div>
+        )}
         <button type="submit" className="px-4 py-2 font-bold text-white rounded bg-seasy hover:bg-seasyDark">
           Convert
         </button>
