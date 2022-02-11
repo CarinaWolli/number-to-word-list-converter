@@ -27,7 +27,7 @@ export default function Index() {
 
   return (
     <div>
-      <h1 className="mb-3 text-3xl font-bold text-seasy">Coding Challenge</h1>
+      <h1 className="mb-3 text-3xl font-bold text-seasy">Seasy - Coding Assignment</h1>
       <h2 className="font-bold text-gray-700 text">Number to word list converter</h2>
       <form className="mt-12 space-y-3" onSubmit={convertNumberToWordList}>
         <input
