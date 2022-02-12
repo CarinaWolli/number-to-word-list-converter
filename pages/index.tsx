@@ -12,7 +12,7 @@ export default function Index() {
     const inludesZeroOrOne = numberStringFormat.includes("0") || numberStringFormat.includes("1");
 
     if (!inludesZeroOrOne) {
-      const responseWordList = await axios.post("/api/converter", { number: numberStringFormat });
+      const responseWordList = await axios.get("/api/converter", { params: { number: numberStringFormat } });
       setWordList(responseWordList.data.wordList);
       setValidNumber(true);
     } else {
