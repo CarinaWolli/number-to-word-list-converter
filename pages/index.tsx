@@ -12,8 +12,14 @@ export default function Index() {
     const inludesZeroOrOne = numberStringFormat.includes("0") || numberStringFormat.includes("1");
 
     if (!inludesZeroOrOne) {
-      const responseWordList = await axios.get("/api/converter", { params: { number: numberStringFormat } });
-      setWordList(responseWordList.data.wordList);
+      try {
+        const responseWordList = await axios.get("/api/converter", {
+          params: { number: numberStringFormat },
+        });
+        setWordList(responseWordList.data.wordList);
+      } catch (e) {
+        alert(e);
+      }
       setValidNumber(true);
     } else {
       setWordList([]);
