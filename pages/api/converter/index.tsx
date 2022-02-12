@@ -1,9 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { number } = req.query;
-  const wordList = letterCombinations(number.toString());
-  res.status(200).send({ wordList: wordList });
+  if (req.method === "GET") {
+    const { number } = req.query;
+    const wordList = letterCombinations(number.toString());
+    res.status(200).send({ wordList });
+  }
+  return;
 }
 
 function letterCombinations(digits: string): string[] {
